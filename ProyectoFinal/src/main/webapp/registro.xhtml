@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>REGISTRO DE EMISORA</title>
+	</h:head>
+    <h:body>
+    	<h:form>
+    		<h3>Formulario</h3><br></br>
+    		<p:panel header ="Registro" style ="width:370px; color: #1f2029; border-radius: 10px;">
+    			<h:outputLabel for ="nombre" value ="Nombre de la emisora:"/><br></br>
+    			<h:inputText value ="#{Bean.nombre}"></h:inputText><br></br>
+    			
+    			<h:outputLabel for ="modoTransmicion" value ="Modo de transmicion:"/><br></br>
+    			<h:selectOneMenu value ="#{Bean.modoTransmicion}">
+		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
+		            <f:selectItem itemLabel ="AM" itemValue ="AM" />
+		            <f:selectItem itemLabel ="FM" itemValue ="FM" />
+		            <f:selectItem itemLabel ="Streaming" itemValue ="Streaming" />
+		        </h:selectOneMenu><br></br>
+		        
+		        <h:outputLabel for ="tipoMusica" value ="Tipo de musica:"/><br></br>
+    			<h:selectOneMenu value ="#{Bean.tipoMusica}">
+		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
+		            <f:selectItem itemLabel ="Rock" itemValue ="Rock" />
+		            <f:selectItem itemLabel ="Plancha" itemValue ="Plancha" />
+		            <f:selectItem itemLabel ="Regueton" itemValue ="Regueton" />
+		        </h:selectOneMenu><br></br>
+		        
+    			<f:facet name ="footer">
+    				<h:commandButton action ="#{Bean.registrar}" value ="Registrar"/>
+    			</f:facet>
+    		</p:panel>
+    	</h:form>
+    </h:body>
+</html>
