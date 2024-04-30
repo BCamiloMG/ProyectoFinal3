@@ -1,6 +1,6 @@
-package co.edu.unbosque.dao;
+package co.edu.unbosque.BJCyberNeticForrestM;
 
-public class PistaDAO implements ICrud{
+public class EmisoraDAO implements ICrud{
 
 	@Override
 	public String agregar(Object registro) {
