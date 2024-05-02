@@ -3,7 +3,6 @@ package co.edu.unbosque.BJCyberNeticForrestM.model;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 
-
 @EntityScan
 public class Emisora {
 	@Id
