@@ -1,12 +1,13 @@
 package co.edu.unbosque.BJCyberNeticForrestM.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-@EntityScan
+@Entity
 public class Cancion {
 	
 	@Id
+	private int numCancion;
 	private String genero_musical;
 	private String nombre_cancion;
 	private String nombre_artista;

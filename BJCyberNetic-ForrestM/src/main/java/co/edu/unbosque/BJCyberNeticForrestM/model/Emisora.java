@@ -1,11 +1,13 @@
 package co.edu.unbosque.BJCyberNeticForrestM.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-@EntityScan
+@Entity
 public class Emisora {
 	@Id
+	
+	private int numEmisora;
 	/** El nombre de la emisora. */
 	private String nombre_emisora;
 	
