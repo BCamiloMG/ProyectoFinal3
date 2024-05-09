@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Registro de la emisora</title>
+<link rel ="stylesheet" href="../css/parrillaMusical.css"/>
+<link rel="icon" type="imagen/png" href="../imagenes/icono.png"/>
+
+</h:head>
+<h:body>
+
+    	<h:form class="emisora">
+    	<div class="glitch-wrapper">
+   		<div class="glitch" data-glitch="ForrestM">ForrestM</div>
+		</div>
+    		<h3>Parrilla del dia</h3><br></br>
+    		<p:panel header="Registro" style="width:370px; color: #002762; border-radius: 10px; background: #002762;">
+    			
+    			<h:outputLabel class="text" for ="parrillaM" value ="Parrilla de programacion del dia:" style="color: white;"/><br></br>
+    			<h:selectOneMenu value ="#{Bean.modoTransmicion}">
+		            <f:selectItem itemLabel ="Inserte el bean aqui :)" itemValue ="" />
+		            
+		        </h:selectOneMenu><br></br>
+		        
+    				<h:commandButton action="#{Bean.registrar}" value="Establecer parrilla" styleClass="agregar-emisora" />
+<div style="margin-top: 10px;"></div>
+<h:commandButton action="#{Bean.registrar}" value="Volver" styleClass="agregar-emisora" />
+    			
+    		</p:panel>
+    	</h:form>
+    </h:body>
+</html>

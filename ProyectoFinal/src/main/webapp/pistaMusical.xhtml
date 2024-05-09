@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Registro de la emisora</title>
+<link rel ="stylesheet" href="../css/pistaMusical.css"/>
+<link rel="icon" type="imagen/png" href="../imagenes/icono.png"/>
+
+</h:head>
+<h:body>
+
+    	<h:form class="emisora">
+    	<div class="glitch-wrapper">
+   		<div class="glitch" data-glitch="ForrestM">ForrestM</div>
+		</div>
+    		<h3>Agrega una pista musical! </h3><br></br>
+    		<p:panel header="Registro" style="width:370px; color: #002762; border-radius: 10px; background: #002762;">
+    			
+    			<h:outputLabel class="text" for ="generoM" value ="Genero musical:" style="color: white;"/><br></br>
+    			<h:selectOneMenu value ="#{Bean.generoMusical}">
+		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
+		            <f:selectItem itemLabel ="Rock" itemValue ="Rock" />
+		            <f:selectItem itemLabel ="Bachata" itemValue ="Bachata" />
+		            <f:selectItem itemLabel ="Reguetton" itemValue ="Reguetton" />
+		            <f:selectItem itemLabel ="Salsa" itemValue ="Salsa" />
+		            <f:selectItem itemLabel ="Pop" itemValue ="Pop" />
+		        </h:selectOneMenu><br></br>
+		        
+		        <h:outputLabel class="text" for ="nombreC" value ="Nombre de la cancion:" style="color: white;"/><br></br>
+    			<h:inputText value ="#{Bean.nombreC}"></h:inputText><br></br>
+    			
+    			<h:outputLabel class="text" for ="nombreA" value ="Nombre del artista:" style="color: white;"/><br></br>
+    			<h:inputText value ="#{Bean.nombreA}"></h:inputText><br></br>
+    			
+    			<h:outputLabel class="text" for ="playlistM" value ="Playlist de la canción:" style="color: white;"/><br></br>
+    			<h:selectOneMenu value ="#{Bean.generoMusical}">
+		            <f:selectItem itemLabel ="inserte funcion del bean aqui :)" itemValue ="" />
+		            
+		        </h:selectOneMenu><br></br>
+		        
+		     
+    				<h:commandButton action ="#{Bean.registrar}" value ="Buscar MP3" styleClass="agregar-pistaM"/>
+    				<div style="margin-top: 10px;"></div>
+    				<h:commandButton action ="#{Bean.registrar}" value ="Agregar pista musical!" styleClass="agregar-pistaM"/>
+    				<div style="margin-top: 10px;"></div>
+    				<h:commandButton action ="#{Bean.registrar}" value ="Volver" styleClass="agregar-pistaM"/>
+    			
+    		</p:panel>
+    	</h:form>
+    </h:body>
+</html>

@@ -1,22 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
-	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>REGISTRO DE EMISORA</title>
-	</h:head>
-    <h:body>
-    	<h:form>
-    		<h3>Formulario</h3><br></br>
-    		<p:panel header ="Registro" style ="width:370px; color: #1f2029; border-radius: 10px;">
-    			<h:outputLabel for ="nombre" value ="Nombre de la emisora:"/><br></br>
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Registro de la emisora</title>
+<link rel ="stylesheet" href="../css/registro.css"/>
+<link rel="icon" type="imagen/png" href="../imagenes/icono.png"/>
+
+</h:head>
+<h:body>
+
+    	<h:form class="emisora">
+    	<div class="glitch-wrapper">
+   		<div class="glitch" data-glitch="ForrestM">ForrestM</div>
+		</div>
+    		<h3>Parametros De Emisora</h3><br></br>
+    		<p:panel header="Registro" style="width:370px; color: #002762; border-radius: 10px; background: #002762;">
+    			<h:outputLabel class="text" for ="nombre" value ="Nombre de la emisora:" style="color: white;"/><br></br>
     			<h:inputText value ="#{Bean.nombre}"></h:inputText><br></br>
     			
-    			<h:outputLabel for ="modoTransmicion" value ="Modo de transmicion:"/><br></br>
+    			<h:outputLabel class="text" for ="modoTransmicion" value ="Modo de transmicion:" style="color: white;"/><br></br>
     			<h:selectOneMenu value ="#{Bean.modoTransmicion}">
 		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
 		            <f:selectItem itemLabel ="AM" itemValue ="AM" />
@@ -24,17 +30,19 @@
 		            <f:selectItem itemLabel ="Streaming" itemValue ="Streaming" />
 		        </h:selectOneMenu><br></br>
 		        
-		        <h:outputLabel for ="tipoMusica" value ="Tipo de musica:"/><br></br>
+		        <h:outputLabel for ="tipoMusica" value ="Tipo de musica:" style="color: white;"/><br></br>
     			<h:selectOneMenu value ="#{Bean.tipoMusica}">
 		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
 		            <f:selectItem itemLabel ="Rock" itemValue ="Rock" />
-		            <f:selectItem itemLabel ="Plancha" itemValue ="Plancha" />
+		            <f:selectItem itemLabel ="Bachata" itemValue ="Plancha" />
 		            <f:selectItem itemLabel ="Regueton" itemValue ="Regueton" />
+		            <f:selectItem itemLabel ="Salsa" itemValue ="Salsa" />
+		            <f:selectItem itemLabel ="Pop" itemValue ="Pop" />
 		        </h:selectOneMenu><br></br>
-		        
-    			<f:facet name ="footer">
-    				<h:commandButton action ="#{Bean.registrar}" value ="Registrar"/>
-    			</f:facet>
+		     
+    				<h:commandButton action ="#{Bean.registrar}" value ="Registrar" styleClass="agregar-emisora"/>
+    				<div style="margin-top: 10px;"></div>
+    			
     		</p:panel>
     	</h:form>
     </h:body>
