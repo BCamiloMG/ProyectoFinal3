@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
 <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Menu Principal</title>
     <link rel="stylesheet" type="text/css" href="../css/menu.css" />
@@ -9,9 +14,7 @@
 </head>
 <body>
     <section class="nav">
-    <div class="imagen-redonda">
-        <img src="../imagenes/icono.png" alt="Imagen"/>
-    </div>
+
         <h1>FORRESTM</h1>
         <h3 class="span loader">
             <span class="m">M</span>
@@ -31,12 +34,11 @@
 			<span class="m">s</span>
         </h3>
         <div class="nav-container">
-            <a class="nav-tab" href="#tab-svelte">CrearPista</a>
-            <a class="nav-tab" href="#tab-esbuild">ElegirParrilla</a>
-            <a class="nav-tab" href="#tab-next">EnVIVO</a>
-            <a class="nav-tab" href="#tab-next">Volver</a>
-            <span class="nav-tab-slider"></span>
-        </div>
+        	<a class="nav-tab" href="pistaMusical.xhtml">CrearPista</a>
+            <a class="nav-tab" href="parrillaMusical.xhtml">ElegirParrilla</a>
+            <a class="nav-tab" href="enVivo.xhtml">EnVIVO</a>
+            <a class="nav-tab" href="registro.xhtml">Volver</a>
+		</div>
     </section>
     <canvas class="background"></canvas>    
 </body>
