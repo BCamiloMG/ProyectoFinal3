@@ -101,6 +101,16 @@
 		    <tr>
 			    <td><h:commandButton action="#{Bean.registrar}" class="play" title="Play" value="PLAY"></h:commandButton></td>
 			</tr>
+			<tr>
+			    <td><h:selectOneMenu value ="#{Bean.generoMusical}">
+		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
+		            <f:selectItem itemLabel ="Rock" itemValue ="Rock" />
+		            <f:selectItem itemLabel ="Bachata" itemValue ="Bachata" />
+		            <f:selectItem itemLabel ="Reguetton" itemValue ="Reguetton" />
+		            <f:selectItem itemLabel ="Salsa" itemValue ="Salsa" />
+		            <f:selectItem itemLabel ="Pop" itemValue ="Pop" />
+		        </h:selectOneMenu></td>
+			</tr>
 		  </table>
 		
 		  <div class="current"><h2>STRESSED OUT</h2></div>
