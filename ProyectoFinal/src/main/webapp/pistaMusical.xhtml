@@ -11,17 +11,22 @@
 <link rel="icon" type="imagen/png" href="../imagenes/icono.png"/>
 
 </h:head>
-<h:body>
-
-    	<h:form class="emisora">
+	<h:body>
+		<h:form class="emisora" enctype="multipart/form-data">
     	<div class="glitch-wrapper">
    		<div class="glitch" data-glitch="ForrestM">ForrestM</div>
 		</div>
     		<h3>Agrega una pista musical! </h3><br></br>
     		<p:panel header="Registro" style="width:370px; color: #002762; border-radius: 10px; background: #002762;">
     			
-    			<h:outputLabel class="text" for ="generoM" value ="Genero musical:" style="color: white;"/><br></br>
-    			<h:selectOneMenu value ="#{Bean.generoMusical}">
+    			<h:outputLabel class="text" for ="playList" value ="Seleccione la PlayList:" style="color: white;"/><br></br>
+    			<h:selectOneMenu value ="#{cancionBean.playListSeleccionada}">
+					<f:selectItem itemLabel="Selecciona una playlist..." itemValue=""/>
+						<f:selectItems value="#{playListBean.mostrarPlayLists()}" var="playlist" itemValue="#{playlist}" itemLabel="#{playlist.nombre}"/>
+		        </h:selectOneMenu><br></br>
+    			
+    			<h:outputLabel class="text" for ="generoMusical" value ="Genero musical:" style="color: white;"/><br></br>
+    			<h:selectOneMenu value ="#{cancionBean.generoMusical}">
 		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
 		            <f:selectItem itemLabel ="Rock" itemValue ="Rock" />
 		            <f:selectItem itemLabel ="Bachata" itemValue ="Bachata" />
@@ -30,23 +35,19 @@
 		            <f:selectItem itemLabel ="Pop" itemValue ="Pop" />
 		        </h:selectOneMenu><br></br>
 		        
-		        <h:outputLabel class="text" for ="nombreC" value ="Nombre de la cancion:" style="color: white;"/><br></br>
-    			<h:inputText value ="#{Bean.nombreC}"></h:inputText><br></br>
+		        <h:outputLabel class="text" for ="nombre" value ="Nombre de la cancion:" style="color: white;"/><br></br>
+    			<h:inputText value ="#{cancionBean.nombre}"></h:inputText><br></br>
     			
-    			<h:outputLabel class="text" for ="nombreA" value ="Nombre del artista:" style="color: white;"/><br></br>
-    			<h:inputText value ="#{Bean.nombreA}"></h:inputText><br></br>
-    			
-    			<h:outputLabel class="text" for ="playlistM" value ="Playlist de la canción:" style="color: white;"/><br></br>
-    			<h:selectOneMenu value ="#{Bean.generoMusical}">
-		            <f:selectItem itemLabel ="inserte funcion del bean aqui :)" itemValue ="" />
-		            
-		        </h:selectOneMenu><br></br>
+    			<h:outputLabel class="text" for ="nombreArtista" value ="Nombre del artista:" style="color: white;"/><br></br>
+    			<h:inputText value ="#{cancionBean.nombreArtista}"></h:inputText><br></br>
 		        
-		     
-    				<h:commandButton action ="#{Bean.registrar}" value ="Buscar MP3" styleClass="agregar-pistaM"/>
-    				<div style="margin-top: 10px;"></div>
-    				<h:commandButton action ="#{Bean.registrar}" value ="Agregar pista musical!" styleClass="agregar-pistaM"/>
-    				<div style="margin-top: 10px;"></div>
+		   
+    				<div class="custom-file-upload">
+   		 			<h:inputFile value="#{cancionBean.archivoMP3}" styleClass="agregar-pistaM" />
+    				<label for="archivoMP3">Seleccionar archivo MP3</label>
+					</div>
+					
+    				<h:commandButton action ="#{cancionBean.subirCancion}" value ="Agregar pista musical!" styleClass="agregar-pistaM"/>
     				<h:commandButton action ="#{Bean.registrar}" value ="Volver" styleClass="agregar-pistaM"/>
     			
     		</p:panel>

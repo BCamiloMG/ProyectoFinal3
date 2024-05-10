@@ -12,23 +12,18 @@
 
 </h:head>
 <h:body>
-
     	<h:form class="emisora">
     	<div class="glitch-wrapper">
    		<div class="glitch" data-glitch="ForrestM">ForrestM</div>
 		</div>
     		<h3>Parrilla del dia</h3><br></br>
     		<p:panel header="Registro" style="width:370px; color: #002762; border-radius: 10px; background: #002762;">
-    			
-    			<h:outputLabel class="text" for ="parrillaM" value ="Parrilla de programacion del dia:" style="color: white;"/><br></br>
-    			<h:selectOneMenu value ="#{Bean.modoTransmicion}">
-		            <f:selectItem itemLabel ="Inserte el bean aqui :)" itemValue ="" />
-		            
-		        </h:selectOneMenu><br></br>
+    			<h:outputLabel class="text" for ="parrillaM" value ="Nombre :" style="color: white;"/><br></br>
+    			<h:inputText value ="#{playListBean.nombre}"></h:inputText><br></br>
 		        
-    				<h:commandButton action="#{Bean.registrar}" value="Establecer parrilla" styleClass="agregar-emisora" />
-<div style="margin-top: 10px;"></div>
-<h:commandButton action="#{Bean.registrar}" value="Volver" styleClass="agregar-emisora" />
+   				<h:commandButton action="#{playListBean.agregarListaReproduccion(playListBean.nombre)}" value="Establecer parrilla" styleClass="agregar-emisora" />
+				<div style="margin-top: 10px;"></div>
+				<h:commandButton action="#{Bean.registrar}" value="Volver" styleClass="agregar-emisora" />
     			
     		</p:panel>
     	</h:form>
