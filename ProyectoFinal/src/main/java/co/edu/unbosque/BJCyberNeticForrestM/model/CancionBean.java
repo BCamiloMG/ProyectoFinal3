@@ -1,10 +1,9 @@
 package co.edu.unbosque.BJCyberNeticForrestM.model;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
@@ -31,6 +30,7 @@ public class CancionBean {
 	private String url;
 	private ArrayList<Cancion> listaCanciones;
 	private Part archivoMP3;
+	private String nombreListaSeleccionada;
 	private PlayListDTO playListSeleccionada;
 	
 	@ManagedProperty(value="#{playListBean}")
@@ -90,6 +90,12 @@ public class CancionBean {
 	public void setPlayListBean(PlayListBean playListBean) {
 		this.playListBean = playListBean;
 	}
+	public String getNombreListaSeleccionada() {
+		return nombreListaSeleccionada;
+	}
+	public void setNombreListaSeleccionada(String nombreListaSeleccionada) {
+		this.nombreListaSeleccionada = nombreListaSeleccionada;
+	}
 	public void crearCancion () {
 		this.numCancion = 1;
 		Cancion cancion = new Cancion(this.numCancion, this.genero_musical, this.nombre_cancion, this.nombre_artista, this.url);
@@ -117,35 +123,69 @@ public class CancionBean {
 		
 	}
 	
-	public void subirCancion() {
-	    if (archivoMP3 != null) {
-	        try (InputStream input = archivoMP3.getInputStream()) {
-	            String fileName = getFileName(archivoMP3);
-	            String path = "../canciones" + fileName; // Ruta donde quieres guardar la canción
-	            try (OutputStream output = new FileOutputStream(new File(path))) {
-	                byte[] buffer = new byte[1024];
-	                int bytesRead;
-	                while ((bytesRead = input.read(buffer)) != -1) {
-	                    output.write(buffer, 0, bytesRead);
+	public void subirCancion() throws IOException {
+	    FacesMessage message = null;
+
+	    // Verificar si se ha seleccionado una lista de reproducción
+	    if (playListSeleccionada == null) {
+	        message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe seleccionar una lista de reproducción.");
+	    } else {
+	        if (archivoMP3 != null) {
+	            String fileName = Paths.get(archivoMP3.getSubmittedFileName()).getFileName().toString();
+	            String folderPath = "D:\\ProyectoFinal3\\ProyectoFinal\\src\\main\\webapp\\canciones\\";
+	            
+	            // Obtener el nombre de la canción del formulario
+	            String nombreArchivo = this.nombre_cancion.trim().replaceAll("\\s+", ""); // Elimina espacios en blanco y los reemplaza con ""
+
+	            // Cambiar el nombre del archivo MP3
+	            String[] fileNameParts = fileName.split("\\."); // Separar el nombre del archivo y la extensión
+	            String fileExtension = fileNameParts[fileNameParts.length - 1]; // Obtener la extensión del archivo
+	            String nuevoNombreArchivo = nombreArchivo + "." + fileExtension; // Crear el nuevo nombre del archivo MP3
+
+	            // Guardar el archivo MP3 con el nuevo nombre en la carpeta especificada
+	            Path destinationPath = Paths.get(folderPath + nuevoNombreArchivo);
+	            Files.copy(archivoMP3.getInputStream(), destinationPath);
+	            
+	            // Setear la lista seleccionada en PlayListBean
+	            playListBean.setListaSeleccionada(playListSeleccionada);
+
+	            // Crear una instancia de la canción y agregarla a la lista de reproducción seleccionada
+	            Cancion cancion = new Cancion(genero_musical, nombre_cancion, nombre_artista, destinationPath.toString(), playListSeleccionada.getNombre());
+	            playListBean.agregarCancionALista(cancion);
+
+	            // Actualizar la lista seleccionada después de agregar la canción
+	            playListSeleccionada = playListBean.getListaSeleccionada();
+	            
+	            // Debugging: Verificar la lista seleccionada
+	            System.out.println("Lista seleccionada: " + playListSeleccionada);
+
+	            // Mostrar el contenido de la lista de reproducción
+	            if (playListSeleccionada != null && !playListSeleccionada.getCanciones().isEmpty()) {
+	                StringBuilder playlistContent = new StringBuilder("Contenido de la lista de reproducción:\n");
+	                for (Cancion song : playListSeleccionada.getCanciones()) {
+	                    playlistContent.append(song.getNombre_cancion()).append("\n");
 	                }
-	                // Agregar la canción a la lista de reproducción seleccionada
-	                Cancion cancion = new Cancion(genero_musical, nombre_cancion, nombre_artista, path, playListBean.getListaSeleccionada().getNombre());
-	                playListBean.agregarCancionALista(cancion);
-	                FacesMessage message = new FacesMessage("Éxito", "La canción se ha agregado a la lista de reproducción.");
-	                FacesContext.getCurrentInstance().addMessage(null, message);
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error al guardar la canción.");
-	                FacesContext.getCurrentInstance().addMessage(null, message);
+	                FacesMessage playlistMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Contenido de la lista de reproducción" + playlistContent.toString(), playlistContent.toString());
+	                FacesContext.getCurrentInstance().addMessage("playlistContent", playlistMessage);
+
+	                // Mensaje de éxito
+	                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "La canción se ha agregado a la lista de reproducción.");
+	            } else {
+	                // Si la lista de reproducción está vacía
+	                FacesMessage emptyListMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", "La lista de reproducción está vacía.");
+	                FacesContext.getCurrentInstance().addMessage("playlistContent", emptyListMessage);
+	                return; // Evitar mostrar el mensaje de éxito si la lista está vacía
 	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error al subir la canción.");
-	            FacesContext.getCurrentInstance().addMessage(null, message);
+	        } else {
+	            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe seleccionar un archivo MP3.");
 	        }
 	    }
+
+	    // Mostrar el mensaje de error o éxito
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	
+	@SuppressWarnings("unused")
 	private String getFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] tokens = contentDisp.split(";");
@@ -156,4 +196,8 @@ public class CancionBean {
         }
         return "";
     }
+	
+	public String volver() {
+		return "menu.xhtml";
+	}
 }

@@ -3,18 +3,21 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Registro de la emisora</title>
-<link rel ="stylesheet" href="../css/vivo.css"/>
-<link rel="icon" type="imagen/png" href="../imagenes/icono.png"/>
-</h:head>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Registro de la emisora</title>
+		<link rel ="stylesheet" href="../css/vivo.css"/>
+		<link rel="icon" type="imagen/png" href="../imagenes/icono.png"/>
+	</h:head>
 	<h:body>
 		<div class="glitch-wrapper">
    		<div class="glitch" data-glitch="ForrestM">ForrestM</div>
    		</div>
-		<article class="screen">
+   		
+   		
+		<form class="screen">
 		  <input type="checkbox" value="None" id="magicButton" name="check" />
 		  <label class="main" for="magicButton"></label>
 		
@@ -22,101 +25,59 @@
 		  <div class="search"></div>
 		  <div class="bodyPlayer"></div>
 		
+		  <p:outputPanel id="tablaCanciones">
 		  <table class="list">
+		  	<ui:repeat value="#{playListBean.listaSeleccionada.canciones}"
+                var="cancion" varStatus="loop">
 		    <tr class="song">
 		      <td class="nr">
-		        <h5>1</h5></td>
-		      <td class="title"><h6>Heavydirtysoul</h6></td>
+		        <h5>#{loop.index + 1}</h5></td>
+		      <td class="title"><h6>#{cancion.nombre_cancion}</h6></td>
 		      <td class="length"><h5>3:54</h5></td>
+		      <td>
+                  <audio id="audio_#{loop.index}" controls="controls" onended="reproducirSiguienteCancion('#{loop.index + 1}')">
+                      <source src="#{request.contextPath}/recursos/canciones/#{cancion.nombre_cancion}.mp3" type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                  </audio>
+              </td>
 		      <td><input type="checkbox" id="heart"/><label class="zmr" for="heart"></label></td>
 		    </tr>
-		    
-		    <tr class="song">
-		      <td class="nr"><h5>2</h5></td>
-		      <td class="title"><h6>StressedOut</h6></td>
-		      <td class="length"><h5>3:22</h5></td>
-		      <td><input type="checkbox" id="heart1" /><label class="zmr" for="heart1"></label></td>
-		    </tr>
-		    
-		    <tr class="song">
-		      <td class="nr"><h5>3</h5></td>
-		      <td class="title"><h6>Ride</h6></td>
-		      <td class="length"><h5>3:34</h5></td>
-		      <td><input type="checkbox" id="heart2"/><label class="zmr" for="heart2"></label></td>
-		    </tr>
-		    
-		    <tr class="song">
-		      <td class="nr"><h5>4</h5></td>
-		      <td class="title"><h6>Fairy Local</h6></td>
-		      <td class="length"><h5>3:27</h5></td>
-		      <td><input type="checkbox" id="heart3" /><label class="zmr" for="heart3"></label></td>
-		    </tr>
-		    
-		    <tr class="song">
-		      <td class="nr"><h5>5</h5></td>
-		      <td class="title"><h6>Tear in My Heart</h6></td>
-		      <td class="length"><h5>3:08</h5></td>
-		      <td><input type="checkbox" id="heart4"/><label class="zmr" for="heart4"></label></td>
-		    </tr>
-		    
-		    <tr class="song">
-		      <td class="nr"><h5>6</h5></td>
-		      <td class="title"><h6>Lane Boy</h6></td>
-		      <td class="length"><h5>4:13</h5></td>
-		      <td><input type="checkbox" id="heart5"/><label class="zmr" for="heart5"></label></td>
-		    </tr>
-		    
-		    <tr class="song">
-		      <td class="nr"><h5>7</h5></td>
-		      <td class="title"><h6>The Judge</h6></td>
-		      <td class="length"><h5>4:57</h5></td>
-		      <td><input type="checkbox" id="heart6"/><label class="zmr" for="heart6"></label></td>
-		    </tr>
-		    
-		    <tr class="song">
-		      <td class="nr"><h5>8</h5></td>
-		      <td class="title"><h6>Doubt</h6></td>
-		      <td class="length"><h5>3:11</h5></td>
-		      <td><input type="checkbox" id="heart7"/><label class="zmr" for="heart7"></label></td>
-		    </tr>
-		    
-		    <tr class="song">
-		      <td class="nr"><h5>9</h5></td>
-		      <td class="title"><h6>Polarize</h6></td>
-		      <td class="length"><h5>3:46</h5></td>
-		      <td><input type="checkbox" id="heart8"/><label class="zmr" for="heart8"></label></td>
-		    </tr>
+		    </ui:repeat>
 		  </table>
+		  </p:outputPanel>
 		
 		  <div class="shadow"></div>
 		
 		  <div class="bar"></div>
 		
 		  <div class="info">
-		    <h4>STRESSED OUT</h4>
-		    <h3>twenty one pilots - Blurryface</h3>
+		    <h4>#{cancion.nombre_cancion}</h4>
+		    <h3>#{cancion.nombre_artista}</h3>
 		  </div>
-		  <audio preload="auto" id="audio">
-
-		  </audio>
 		
 		  <table class="player">
-		    <tr>
-			    <td><h:commandButton action="#{Bean.registrar}" class="play" title="Play" value="PLAY"></h:commandButton></td>
+			<tr>
+			    <td>
+			    	<h:selectOneMenu
+						value="#{cancionBean.playListSeleccionada}"
+						onchange="actualizarCanciones()">
+						<f:selectItem itemLabel="Selecciona una playlist..." itemValue="" />
+						<f:selectItems value="#{playListBean.mostrarPlayLists()}"
+							var="playlist" itemValue="#{playlist}"
+							itemLabel="#{playlist.nombre}" />
+						<f:ajax execute="@this" render="tablaCanciones" />
+					</h:selectOneMenu>
+				</td>
 			</tr>
 			<tr>
-			    <td><h:selectOneMenu value ="#{Bean.generoMusical}">
-		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
-		            <f:selectItem itemLabel ="Rock" itemValue ="Rock" />
-		            <f:selectItem itemLabel ="Bachata" itemValue ="Bachata" />
-		            <f:selectItem itemLabel ="Reguetton" itemValue ="Reguetton" />
-		            <f:selectItem itemLabel ="Salsa" itemValue ="Salsa" />
-		            <f:selectItem itemLabel ="Pop" itemValue ="Pop" />
-		        </h:selectOneMenu></td>
+			    <td><h:commandButton action="#{cancionBean.volver}" class="play" value="Volver"></h:commandButton></td>
+			</tr>
+			<tr>
+				<audio controls="controls" type="audio/mpeg" src="#{request.contextPath}/canciones/Amorfoda.mp3" />
 			</tr>
 		  </table>
-		
-		  <div class="current"><h2>STRESSED OUT</h2></div>
-		</article>
+		  
+		  <div class="current"><h2>#{cancion.nombre_cancion}</h2></div>
+		</form>
     </h:body>
 </html>

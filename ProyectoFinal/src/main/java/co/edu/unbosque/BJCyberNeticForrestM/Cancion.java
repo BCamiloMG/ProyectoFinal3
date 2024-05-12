@@ -8,6 +8,7 @@ public class Cancion {
 	private String nombre_artista;
 	private String url;
 	private String playList;
+	private boolean autoplay;
 	
 	public Cancion() {
 		// TODO Auto-generated constructor stub
@@ -77,6 +78,14 @@ public class Cancion {
 
 	public void setPlayList(String playList) {
 		this.playList = playList;
+	}
+
+	public boolean isAutoplay() {
+		return autoplay;
+	}
+
+	public void setAutoplay(boolean autoplay) {
+		this.autoplay = autoplay;
 	}
 	
 }

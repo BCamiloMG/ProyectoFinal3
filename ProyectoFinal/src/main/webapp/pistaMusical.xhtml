@@ -26,7 +26,7 @@
 		        </h:selectOneMenu><br></br>
     			
     			<h:outputLabel class="text" for ="generoMusical" value ="Genero musical:" style="color: white;"/><br></br>
-    			<h:selectOneMenu value ="#{cancionBean.generoMusical}">
+    			<h:selectOneMenu value ="#{cancionBean.genero_musical}">
 		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
 		            <f:selectItem itemLabel ="Rock" itemValue ="Rock" />
 		            <f:selectItem itemLabel ="Bachata" itemValue ="Bachata" />
@@ -36,10 +36,10 @@
 		        </h:selectOneMenu><br></br>
 		        
 		        <h:outputLabel class="text" for ="nombre" value ="Nombre de la cancion:" style="color: white;"/><br></br>
-    			<h:inputText value ="#{cancionBean.nombre}"></h:inputText><br></br>
+    			<h:inputText value ="#{cancionBean.nombre_cancion}"></h:inputText><br></br>
     			
     			<h:outputLabel class="text" for ="nombreArtista" value ="Nombre del artista:" style="color: white;"/><br></br>
-    			<h:inputText value ="#{cancionBean.nombreArtista}"></h:inputText><br></br>
+    			<h:inputText value ="#{cancionBean.nombre_artista}"></h:inputText><br></br>
 		        
 		   
     				<div class="custom-file-upload">
@@ -48,7 +48,7 @@
 					</div>
 					
     				<h:commandButton action ="#{cancionBean.subirCancion}" value ="Agregar pista musical!" styleClass="agregar-pistaM"/>
-    				<h:commandButton action ="#{Bean.registrar}" value ="Volver" styleClass="agregar-pistaM"/>
+    				<h:commandButton action ="#{cancionBean.volver}" value ="Volver" styleClass="agregar-pistaM"/>
     			
     		</p:panel>
     	</h:form>

@@ -20,10 +20,10 @@
     		<h3>Parametros De Emisora</h3><br></br>
     		<p:panel header="Registro" style="width:370px; color: #002762; border-radius: 10px; background: #002762;">
     			<h:outputLabel class="text" for ="nombre" value ="Nombre de la emisora:" style="color: white;"/><br></br>
-    			<h:inputText value ="#{Bean.nombre}"></h:inputText><br></br>
+    			<h:inputText value ="#{emisoraBean.nombre_emisora}"></h:inputText><br></br>
     			
     			<h:outputLabel class="text" for ="modoTransmicion" value ="Modo de transmicion:" style="color: white;"/><br></br>
-    			<h:selectOneMenu value ="#{Bean.modoTransmicion}">
+    			<h:selectOneMenu value ="#{emisoraBean.transmision}">
 		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
 		            <f:selectItem itemLabel ="AM" itemValue ="AM" />
 		            <f:selectItem itemLabel ="FM" itemValue ="FM" />
@@ -31,7 +31,7 @@
 		        </h:selectOneMenu><br></br>
 		        
 		        <h:outputLabel for ="tipoMusica" value ="Tipo de musica:" style="color: white;"/><br></br>
-    			<h:selectOneMenu value ="#{Bean.tipoMusica}">
+    			<h:selectOneMenu value ="#{emisoraBean.tipo_musica}">
 		            <f:selectItem itemLabel ="Selecciona uno..." itemValue ="" />
 		            <f:selectItem itemLabel ="Rock" itemValue ="Rock" />
 		            <f:selectItem itemLabel ="Bachata" itemValue ="Plancha" />
@@ -40,7 +40,9 @@
 		            <f:selectItem itemLabel ="Pop" itemValue ="Pop" />
 		        </h:selectOneMenu><br></br>
 		     
-    				<h:commandButton action ="#{Bean.registrar}" value ="Registrar" styleClass="agregar-emisora"/>
+    				<h:commandButton action ="#{emisoraBean.crearEmisora}" value ="Registrar" styleClass="agregar-emisora"/>
+    				<div style="margin-top: 10px;"></div>
+    				<h:commandButton action ="#{emisoraBean.volver}" value ="Volver" styleClass="agregar-emisora"/>
     				<div style="margin-top: 10px;"></div>
     			
     		</p:panel>

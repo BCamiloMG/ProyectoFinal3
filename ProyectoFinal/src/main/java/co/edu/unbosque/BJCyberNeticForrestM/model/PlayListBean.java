@@ -8,9 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
+
 import co.edu.unbosque.BJCyberNeticForrestM.Cancion;
 import co.edu.unbosque.BJCyberNeticForrestM.PlayListDTO;
-
 
 @ManagedBean
 @SessionScoped
@@ -22,50 +23,44 @@ public class PlayListBean {
 	
 	public PlayListBean() {
 		listasReproduccion = new ArrayList<>();
+		listaSeleccionada = new PlayListDTO();
 	}
-
-	
-	
 	public String getNombre() {
 		return nombre;
 	}
-
-
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-
-
 	public List<PlayListDTO> getListasReproduccion() {
 		return listasReproduccion;
 	}
-
-
-
 	public void setListasReproduccion(List<PlayListDTO> listasReproduccion) {
 		this.listasReproduccion = listasReproduccion;
 	}
-
-
-
 	public PlayListDTO getListaSeleccionada() {
 		return listaSeleccionada;
 	}
-
-
-
 	public void setListaSeleccionada(PlayListDTO listaSeleccionada) {
 		this.listaSeleccionada = listaSeleccionada;
 	}
 
-
-
 	public void agregarListaReproduccion(String nombre) {
 		PlayListDTO nuevaLista = new PlayListDTO(nombre);
 		listasReproduccion.add(nuevaLista);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "Este es un mensaje de prueba");
+	    FacesContext.getCurrentInstance().addMessage(null, message);
 	}
+	
+	public PlayListDTO buscarPlayListPorNombre(String nombre) {
+        if (listasReproduccion != null) {
+            for (PlayListDTO playlist : listasReproduccion) {
+                if (playlist.getNombre().equals(nombre)) {
+                    return playlist;
+                }
+            }
+        }
+        return null; // Si no se encuentra ninguna lista de reproducción con ese nombre
+    }
 	
 	public void agregarCancionALista(Cancion cancion) {
 	    if (listaSeleccionada != null) {
@@ -103,5 +98,46 @@ public class PlayListBean {
         return listasReproduccion;
     }
 	
+	public void reproducirCancionesEnOrden() {
+	    if (listaSeleccionada != null && !listaSeleccionada.getCanciones().isEmpty()) {
+	        // Obtener la lista de canciones de la lista seleccionada
+	        List<Cancion> canciones = listaSeleccionada.getCanciones();
+	        
+	        // Iterar sobre las canciones y establecer autoplay en true
+	        for (Cancion cancion : canciones) {
+	            cancion.setAutoplay(true);
+	        }
+	        
+	        // Llamar a la función JavaScript para reproducir la primera canción automáticamente
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Reproducción automática iniciada.", "Reproduciendo la primera canción automáticamente."));
+	        PrimeFaces.current().executeScript("playFirstSong();");
+	    } else {
+	        System.out.println("La lista de reproducción está vacía.");
+	    }
+	}
+	
+	public void actualizarCanciones() {
+	    // Verificar si se ha seleccionado una lista de reproducción
+	    if (listaSeleccionada != null) { // Utilizando el atributo playListSeleccionada
+	        // Obtener la lista de canciones de la lista seleccionada
+	        List<Cancion> cancionesEnLista = listaSeleccionada.getCanciones();
 
+	        // Debugging: Verificar las canciones en la lista seleccionada
+	        System.out.println("Canciones en la lista seleccionada:");
+	        for (Cancion cancion : cancionesEnLista) {
+	            System.out.println(cancion.getNombre_cancion());
+	        }
+
+	        // Actualizar la tabla de canciones en la interfaz de usuario mediante AJAX
+	        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("form:tablaCanciones");
+	    } else {
+	        // Si no se ha seleccionado una lista de reproducción, mostrar un mensaje de error
+	        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe seleccionar una lista de reproducción.");
+	        FacesContext.getCurrentInstance().addMessage(null, message);
+	    }
+	}
+	
+	public String volver() {
+		return "menu.xhtml";
+	}
 }
