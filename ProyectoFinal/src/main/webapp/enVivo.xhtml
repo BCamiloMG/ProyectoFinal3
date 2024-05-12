@@ -10,14 +10,42 @@
 		<title>Registro de la emisora</title>
 		<link rel ="stylesheet" href="../css/vivo.css"/>
 		<link rel="icon" type="imagen/png" href="../imagenes/icono.png"/>
+		<script>
+		var canciones = #{playListBean.getCancionesJSON()};
+		var audioElement; // Variable global para almacenar el elemento de audio
+		    
+		    function reproducirCanciones() {
+		        console.log("Cantidad de canciones: " + canciones.length);
+		        if (canciones.length > 0) {
+		            reproducirCancion(0, canciones);
+		        } else {
+		            console.log("No hay canciones para reproducir.");
+		        }
+		    }
+		    function reproducirCancion(indice, canciones) {
+		        if (canciones.length > indice) {
+		            var audio = document.getElementById("audio_" + indice);
+		            audio.play();
+		            console.log("Reproduciendo canci贸n " + (indice + 1) + ": " + canciones[indice].nombre); // Depuraci贸n: Verificar la reproducci贸n de cada canci贸n
+		            
+		            audio.onended = function() {
+		                reproducirCancion(indice + 1, canciones);
+		            };
+		        }
+		    }
+		    function pausarCancion() {
+		        if (audioElement) {
+		            audioElement.pause(); // Pausar la canción actual si existe
+		        }
+		    }
+    </script>
 	</h:head>
 	<h:body>
 		<div class="glitch-wrapper">
    		<div class="glitch" data-glitch="ForrestM">ForrestM</div>
    		</div>
    		
-   		
-		<form class="screen">
+		<article class="screen">
 		  <input type="checkbox" value="None" id="magicButton" name="check" />
 		  <label class="main" for="magicButton"></label>
 		
@@ -25,59 +53,65 @@
 		  <div class="search"></div>
 		  <div class="bodyPlayer"></div>
 		
-		  <p:outputPanel id="tablaCanciones">
 		  <table class="list">
 		  	<ui:repeat value="#{playListBean.listaSeleccionada.canciones}"
                 var="cancion" varStatus="loop">
 		    <tr class="song">
 		      <td class="nr">
-		        <h5>#{loop.index + 1}</h5></td>
-		      <td class="title"><h6>#{cancion.nombre_cancion}</h6></td>
-		      <td class="length"><h5>3:54</h5></td>
+		        <h5>#{loop.index + 1}</h5>
+		      </td>
+		      <td class="title">
+		      	<h6>#{cancion.nombre_cancion}</h6>
+		     </td>
+		     <td class="title">
+		      	<h6>#{cancion.nombre_artista}</h6>
+		     </td>
+		      <td class="length">
+		      	<h5>3:54</h5>
+		      </td>
 		      <td>
                   <audio id="audio_#{loop.index}" controls="controls" onended="reproducirSiguienteCancion('#{loop.index + 1}')">
-                      <source src="#{request.contextPath}/recursos/canciones/#{cancion.nombre_cancion}.mp3" type="audio/mpeg" />
+                      <source src="#{request.contextPath}/canciones/#{cancion.nombre_cancion}.mp3" type="audio/mpeg"/>
                       Your browser does not support the audio element.
                   </audio>
               </td>
-		      <td><input type="checkbox" id="heart"/><label class="zmr" for="heart"></label></td>
 		    </tr>
 		    </ui:repeat>
 		  </table>
-		  </p:outputPanel>
 		
 		  <div class="shadow"></div>
-		
 		  <div class="bar"></div>
-		
 		  <div class="info">
-		    <h4>#{cancion.nombre_cancion}</h4>
-		    <h3>#{cancion.nombre_artista}</h3>
+		      <h4>FORREST M</h4>
+			  <h3>Musica para todos</h3>
 		  </div>
-		
+		  
 		  <table class="player">
 			<tr>
 			    <td>
-			    	<h:selectOneMenu
-						value="#{cancionBean.playListSeleccionada}"
-						onchange="actualizarCanciones()">
+			    	<h:selectOneMenu class="ya" value="#{cancionBean.playListSeleccionada}" >
 						<f:selectItem itemLabel="Selecciona una playlist..." itemValue="" />
 						<f:selectItems value="#{playListBean.mostrarPlayLists()}"
 							var="playlist" itemValue="#{playlist}"
 							itemLabel="#{playlist.nombre}" />
-						<f:ajax execute="@this" render="tablaCanciones" />
 					</h:selectOneMenu>
 				</td>
 			</tr>
 			<tr>
-			    <td><h:commandButton action="#{cancionBean.volver}" class="play" value="Volver"></h:commandButton></td>
+				<td>
+					<button type="button" class="play" onclick="reproducirCanciones()" title="Play">PLAY</button>
+					<button type="button" class="play" onclick="pausarCancion()" title="Pause">PAUSE</button>
+				</td>
 			</tr>
 			<tr>
-				<audio controls="controls" type="audio/mpeg" src="#{request.contextPath}/canciones/Amorfoda.mp3" />
+				<td>
+					<a href="menu.xhtml">
+					    <h:commandButton class="play" value="Volver"></h:commandButton>
+					</a>
+				</td>
 			</tr>
 		  </table>
-		  
-		  <div class="current"><h2>#{cancion.nombre_cancion}</h2></div>
-		</form>
+		  <div class="current"><h2>Musica para todos</h2></div>
+		</article>
     </h:body>
 </html>

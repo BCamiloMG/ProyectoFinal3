@@ -140,4 +140,30 @@ public class PlayListBean {
 	public String volver() {
 		return "menu.xhtml";
 	}
+	
+	public String getCancionesJSON() {
+	    List<Cancion> canciones = getCancionesSeleccionadas();
+	    StringBuilder json = new StringBuilder();
+	    json.append("[");
+	    for (Cancion cancion : canciones) {
+	        json.append("{");
+	        json.append("\"nombre\": \"" + cancion.getNombre_cancion() + "\",");
+	        json.append("\"src\": \"" + FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/recursos/canciones/" + cancion.getNombre_cancion() + ".mp3\"");
+	        json.append("},");
+	    }
+	    if (canciones.size() > 0) {
+	        json.deleteCharAt(json.length() - 1); // Eliminar la coma final
+	    }
+	    json.append("]");
+	    return json.toString();
+	}
+	
+	public List<Cancion> getCancionesSeleccionadas() {
+	    List<Cancion> canciones = listaSeleccionada != null ? listaSeleccionada.getCanciones() : new ArrayList<>();
+	    System.out.println("Cantidad de canciones obtenidas: " + canciones.size());
+	    for (Cancion cancion : canciones) {
+	        System.out.println("Nombre de la canción: " + cancion.getNombre_cancion());
+	    }
+	    return canciones;
+	}
 }
