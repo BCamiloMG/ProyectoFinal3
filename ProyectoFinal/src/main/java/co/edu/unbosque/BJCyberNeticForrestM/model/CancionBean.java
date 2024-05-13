@@ -157,6 +157,11 @@ public class CancionBean {
 
 	            // Guardar el archivo MP3 con el nuevo nombre en la carpeta especificada
 	            Path destinationPath = Paths.get(folderPath + nuevoNombreArchivo);
+	            if(Files.exists(destinationPath)) {
+	                FacesMessage existsMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "La canción ya existe en la lista de reproducción.");
+	                FacesContext.getCurrentInstance().addMessage("Ya existe", existsMessage);
+	                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La canción ya existe en la lista de reproducción.");
+	            }else {
 	            Files.copy(archivoMP3.getInputStream(), destinationPath);
 	            
 	            // Setear la lista seleccionada en PlayListBean
@@ -171,7 +176,7 @@ public class CancionBean {
 	            
 	            // Debugging: Verificar la lista seleccionada
 	            System.out.println("Lista seleccionada: " + playListSeleccionada);
-
+	        }
 	            // Mostrar el contenido de la lista de reproducción
 	            if (playListSeleccionada != null && !playListSeleccionada.getCanciones().isEmpty()) {
 	                StringBuilder playlistContent = new StringBuilder("Contenido de la lista de reproducción:\n");

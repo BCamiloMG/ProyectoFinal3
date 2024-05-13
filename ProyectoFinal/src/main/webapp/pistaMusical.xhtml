@@ -43,8 +43,7 @@
 		        
 		   
     				<div class="custom-file-upload">
-   		 			<h:inputFile value="#{cancionBean.archivoMP3}" styleClass="agregar-pistaM" />
-    				<label for="archivoMP3">Seleccionar archivo MP3</label>
+   		 			<p:fileUpload value="#{cancionBean.archivoMP3}" mode="simple" required="true" label="Seleccionar archivo MP3" styleClass="agregar-pistaM"/>
 					</div>
 					
     				<h:commandButton action ="#{cancionBean.subirCancion}" value ="Agregar pista musical!" styleClass="agregar-pistaM"/>

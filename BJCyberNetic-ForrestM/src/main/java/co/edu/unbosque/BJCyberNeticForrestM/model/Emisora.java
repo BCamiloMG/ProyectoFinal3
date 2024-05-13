@@ -12,7 +12,7 @@ public class Emisora {
 	private String nombre_emisora;
 	
 	/** El tipo de transmisión de la emisora (por ejemplo, AM, FM, en línea). */
-	private String transmision;
+	private String transmicion;
 	
 	/** El tipo de música que se transmite en la emisora. */
 	private String tipo_musica;
@@ -38,7 +38,7 @@ public class Emisora {
 	 * @return El tipo de transmisión.
 	 */
 	public String getTransmision() {
-		return transmision;
+		return transmicion;
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class Emisora {
 	 * @param transmicion El tipo de transmisión a establecer.
 	 */
 	public void setTransmision(String transmision) {
-		this.transmision = transmision;
+		this.transmicion = transmision;
 	}
 	
 	/**

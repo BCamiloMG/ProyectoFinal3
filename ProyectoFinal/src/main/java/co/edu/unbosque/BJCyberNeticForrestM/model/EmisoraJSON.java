@@ -76,7 +76,7 @@ public class EmisoraJSON {
 				+ "\"num_emisora\":\""+ emisora.getNumEmisora()
 				+"\",\"nombre_emisora\": \""+emisora.getNombre_emisora()
 				+"\",\"tipo_musica\": \""+emisora.getTipo_musica()
-				+"\",\"transmision\":\""+emisora.getTransmision()
+				+"\",\"transmicion\":\""+emisora.getTransmision()
 				+ "\"}";
 		byte[] out = data.getBytes(StandardCharsets.UTF_8);
 		OutputStream stream = http.getOutputStream();
