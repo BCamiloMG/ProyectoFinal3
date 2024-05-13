@@ -70,7 +70,6 @@ public class EmisoraBean {
 		this.numEmisora = 1;
 		Emisora emisora = new Emisora(this.numEmisora, this.nombre_emisora, this.transmision, this.tipo_musica);
 		int respuesta = 0;
-		String x = "";
 		try {
 			respuesta = EmisoraJSON.postJSON(emisora);
 			if (respuesta == 200) {

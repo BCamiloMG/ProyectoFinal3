@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
+import javax.servlet.ServletContext;
 
 import org.json.simple.parser.ParseException;
 
@@ -35,6 +36,9 @@ public class CancionBean {
 	
 	@ManagedProperty(value="#{playListBean}")
 	private PlayListBean playListBean;
+	
+	@ManagedProperty("#{applicationBean}")
+	private ApplicationBean applicationBean;
 	
 	public int getNumCancion() {
 		return numCancion;
@@ -96,6 +100,12 @@ public class CancionBean {
 	public void setNombreListaSeleccionada(String nombreListaSeleccionada) {
 		this.nombreListaSeleccionada = nombreListaSeleccionada;
 	}
+	public ApplicationBean getApplicationBean() {
+		return applicationBean;
+	}
+	public void setApplicationBean(ApplicationBean applicationBean) {
+		this.applicationBean = applicationBean;
+	}
 	public void crearCancion () {
 		this.numCancion = 1;
 		Cancion cancion = new Cancion(this.numCancion, this.genero_musical, this.nombre_cancion, this.nombre_artista, this.url);
@@ -132,7 +142,10 @@ public class CancionBean {
 	    } else {
 	        if (archivoMP3 != null) {
 	            String fileName = Paths.get(archivoMP3.getSubmittedFileName()).getFileName().toString();
-	            String folderPath = "D:\\ProyectoFinal3\\ProyectoFinal\\src\\main\\webapp\\canciones\\";
+	            this.url = fileName;
+	            crearCancion();
+	            ServletContext context = applicationBean.getServletContext();
+	            String folderPath = context.getRealPath("/canciones/");
 	            
 	            // Obtener el nombre de la canción del formulario
 	            String nombreArchivo = this.nombre_cancion.trim().replaceAll("\\s+", ""); // Elimina espacios en blanco y los reemplaza con ""
